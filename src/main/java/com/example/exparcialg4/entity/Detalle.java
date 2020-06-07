@@ -2,6 +2,7 @@ package com.example.exparcialg4.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Entity
@@ -15,6 +16,7 @@ public class Detalle {
     @Column(nullable = false)
     private int cantidad;
 
+    @NotNull
     @Digits(integer = 5, fraction = 3)
     private BigDecimal preciototal;
 

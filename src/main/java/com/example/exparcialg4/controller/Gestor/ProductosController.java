@@ -5,11 +5,11 @@ import com.example.exparcialg4.repository.ProductosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 @Controller
@@ -30,29 +30,39 @@ public class ProductosController {
     }
 
     @PostMapping(value = "/guardar")
-    public String guardarProducto(Productos productos){
-        productosRepository.save(productos);
-        return "redirect:/productos";
+    public String guardarProducto(@ModelAttribute("productos")  @Valid Productos productos, BindingResult bindingResult , Model model, RedirectAttributes attr) {
+
+        if (bindingResult.hasErrors()) {
+            return "redirect:/product/nuevoProducto";
+        } else {
+            attr.addFlashAttribute("msg", "Producto " + (productos.getIdproductos() == 0 ? "creado" : "actualizado") + " exitosamente");
+            productosRepository.save(productos);
+            return "redirect:/Productos/listar";
+        }
     }
 
     @GetMapping(value = "/editar")
-    public String editarProducto(Model model,@RequestParam("id") int id){
-        Optional<Productos> opt = productosRepository.findById(id);
-        if(opt.isPresent()){
-            model.addAttribute("productos", opt.get());
-            return "Gestor/editarProducto";
+    public String editarProducto(@ModelAttribute("shipper") Productos productos, Model model,@RequestParam("id") int id){
+        Optional<Productos> optProductos = productosRepository.findById(id);
+        if(optProductos.isPresent()){
+            productos = optProductos.get();
+            model.addAttribute("productos", optProductos.get());
+            return "redirect:/Productos/nuevoProducto";
         }else{
             return "redirect:/productos";
         }
     }
 
     @GetMapping(value ="eliminar")
-    public String eliminarProducto(@RequestParam("id") int id){
+    public String eliminarProducto(Model model,
+                                   @RequestParam("id") int id,
+                                   RedirectAttributes attr){
         Optional<Productos> opt = productosRepository.findById(id);
         if(opt.isPresent()) {
             productosRepository.deleteById(id);
+            attr.addFlashAttribute("msg", "Producto borrado exitosamente");
         }
-        return "redirect:/productos";
+        return "redirect:/Productos";
     }
 
 }

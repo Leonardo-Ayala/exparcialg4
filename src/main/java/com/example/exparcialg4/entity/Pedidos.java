@@ -1,6 +1,9 @@
 package com.example.exparcialg4.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
@@ -12,7 +15,10 @@ public class Pedidos {
     @Column(name = "idpedidos")
     private int idpedidos;
 
+    @NotNull
+    @DateTimeFormat(pattern="dd/MM/yyyy")
     private Date fecha;
+
 
     @ManyToOne
     @JoinColumn(name = "usuarios_idusuarios")

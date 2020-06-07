@@ -13,6 +13,7 @@ public class Usuarios implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idusuarios;
 
+    @NotBlank
     private String rol;
 
     @NotBlank(message = "El texto no puede estar vacio")
@@ -27,6 +28,7 @@ public class Usuarios implements Serializable {
     @Pattern(regexp = "[a-zA-Z]",message = "solo se debe ingresar letras")
     private String apellido;
 
+    @NotBlank
     private int activo;
 
     public int getActivo() {
