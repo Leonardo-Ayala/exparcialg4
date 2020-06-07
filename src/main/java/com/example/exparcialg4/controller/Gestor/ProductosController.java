@@ -21,23 +21,23 @@ public class ProductosController {
     @GetMapping(value={"","/"})
     public String listarProductos(Model model){
         model.addAttribute("listaProductos",productosRepository.findAll());
-        return "Productos/productosLista";
+        return "Gestor/productosLista";
     }
 
     @GetMapping(value="/nuevo")
-    public String nuevoProducto(@ModelAttribute("product") Productos productos){
-        return "Productos/nuevoProducto";
+    public String nuevoProducto(){
+        return "Gestor/nuevoProducto";
     }
 
     @PostMapping(value = "/guardar")
     public String guardarProducto(@ModelAttribute("productos")  @Valid Productos productos, BindingResult bindingResult , Model model, RedirectAttributes attr) {
 
         if (bindingResult.hasErrors()) {
-            return "redirect:/Productos/nuevoProducto";
+            return "redirect:/product/nuevoProducto";
         } else {
             attr.addFlashAttribute("msg", "Producto " + (productos.getIdproductos() == 0 ? "creado" : "actualizado") + " exitosamente");
             productosRepository.save(productos);
-            return "redirect:/Productos/productosLista";
+            return "redirect:/Productos/listar";
         }
     }
 
@@ -49,7 +49,7 @@ public class ProductosController {
             model.addAttribute("productos", optProductos.get());
             return "redirect:/Productos/nuevoProducto";
         }else{
-            return "redirect:/Productos/productosLista";
+            return "redirect:/productos";
         }
     }
 
@@ -62,7 +62,7 @@ public class ProductosController {
             productosRepository.deleteById(id);
             attr.addFlashAttribute("msg", "Producto borrado exitosamente");
         }
-        return "redirect:/Usuario/productosLista";
+        return "redirect:/Productos";
     }
 
 }

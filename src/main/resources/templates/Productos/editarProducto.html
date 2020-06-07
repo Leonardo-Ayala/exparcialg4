@@ -6,33 +6,27 @@
 <body>
 <div class="container">
     <nav th:replace="fragments/navbar.html :: navbar( active = 'Productos')"></nav>
-        <h2>Nuevo Producto</h2>
+        <h2>Editar Producto</h2>
         <hr/>
         <form method="post" th:action="@{'/productos/guardar'}">
+            <input th:value="${productos.idproductos}" name="idproductos" type="hidden"/>
+            <input th:value="${productos.precio}" name="precio" type="hidden"/>
+            <input th:value="${productos.codigo}" name="codigo" type="hidden"/>
             <div class="form-group">
                 <label for="nombre">Nombre del Producto</label>
-                <input type="text" class="form-control" name="nombre" id="nombre">
-            </div>
-            <div class="form-group">
-                <label for="codigo">Codigo</label>
-                <input type="text" class="form-control" name="codigo" id="codigo">
-            </div>
-            <div class="form-group">
-                <label for="precio">Precio unitario</label>
-                <input type="text" class="form-control" name="precio" id="precio">
+                <input type="text" class="form-control" name="nombre" id="nombre" th:value="${productos.nombre}">
             </div>
             <div class="form-group">
                 <label for="stock">Unidades en stock</label>
-                <input type="number" class="form-control" name="stock" id="stock">
+                <input type="number" class="form-control" name="stock" id="stock" th:value="${productos.stock}">
             </div>
             <div class="form-group">
                 <label for="descripcion">Descripcion</label>
-                <input type="text" class="form-control" name="descripcion" id="descripcion">
+                <input type="text" class="form-control" name="descripcion" id="descripcion" th:value="${productos.descripcion}">
             </div>
             <a th:href="@{'/productos'}" class="btn btn-danger">Cancelar</a>
-            <button type="submit" class="btn btn-primary">Registrar</button>
+            <button type="submit" class="btn btn-primary">Actualizar</button>
         </form>
-</div>
-
+    </div>
 </body>
 </html>
