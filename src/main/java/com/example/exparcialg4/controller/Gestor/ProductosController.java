@@ -21,23 +21,23 @@ public class ProductosController {
     @GetMapping(value={"","/"})
     public String listarProductos(Model model){
         model.addAttribute("listaProductos",productosRepository.findAll());
-        return "Usuario/productosLista";
+        return "Productos/productosLista";
     }
 
     @GetMapping(value="/nuevo")
-    public String nuevoProducto(){
-        return "Gestor/nuevoProducto";
+    public String nuevoProducto(@ModelAttribute("product") Productos productos){
+        return "Productos/nuevoProducto";
     }
 
     @PostMapping(value = "/guardar")
     public String guardarProducto(@ModelAttribute("productos")  @Valid Productos productos, BindingResult bindingResult , Model model, RedirectAttributes attr) {
 
         if (bindingResult.hasErrors()) {
-            return "redirect:/Usuario/nuevoProducto";
+            return "redirect:/Productos/nuevoProducto";
         } else {
             attr.addFlashAttribute("msg", "Producto " + (productos.getIdproductos() == 0 ? "creado" : "actualizado") + " exitosamente");
             productosRepository.save(productos);
-            return "redirect:/Usuario/productosLista";
+            return "redirect:/Productos/productosLista";
         }
     }
 
@@ -47,9 +47,9 @@ public class ProductosController {
         if(optProductos.isPresent()){
             productos = optProductos.get();
             model.addAttribute("productos", optProductos.get());
-            return "redirect:/Usuario/nuevoProducto";
+            return "redirect:/Productos/nuevoProducto";
         }else{
-            return "redirect:/Usuario/productosLista";
+            return "redirect:/Productos/productosLista";
         }
     }
 
