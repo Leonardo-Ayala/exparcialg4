@@ -21,7 +21,7 @@ public class ProductosController {
     @GetMapping(value={"","/"})
     public String listarProductos(Model model){
         model.addAttribute("listaProductos",productosRepository.findAll());
-        return "Usuario/listar";
+        return "Usuario/productosLista";
     }
 
     @GetMapping(value="/nuevo")
@@ -37,7 +37,7 @@ public class ProductosController {
         } else {
             attr.addFlashAttribute("msg", "Producto " + (productos.getIdproductos() == 0 ? "creado" : "actualizado") + " exitosamente");
             productosRepository.save(productos);
-            return "redirect:/Usuario/listar";
+            return "redirect:/Usuario/productosLista";
         }
     }
 
@@ -49,7 +49,7 @@ public class ProductosController {
             model.addAttribute("productos", optProductos.get());
             return "redirect:/Usuario/nuevoProducto";
         }else{
-            return "redirect:/Usuario/listar";
+            return "redirect:/Usuario/productosLista";
         }
     }
 
@@ -62,7 +62,7 @@ public class ProductosController {
             productosRepository.deleteById(id);
             attr.addFlashAttribute("msg", "Producto borrado exitosamente");
         }
-        return "redirect:/Usuario/listar";
+        return "redirect:/Usuario/productosLista";
     }
 
 }
