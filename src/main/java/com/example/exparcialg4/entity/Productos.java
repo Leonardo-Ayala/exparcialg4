@@ -20,7 +20,7 @@ public class Productos {
     @Pattern(regexp = "[a-zA-Z]",message = "solo se debe ingresar letras")
     private String nombre;
 
-    @Digits(integer = 10, fraction = 4)
+    @Digits(integer = 4, fraction = 2)
     @Positive
     private BigDecimal precio;
 
@@ -88,6 +88,6 @@ public class Productos {
     private byte[] foto;
 
     @NotBlank(message = "La descripción del producto no puede estar vacio")
-    @Size(max = 45,message = "La descripción del producto no puede tener más de 45 caracteres")
+    @Size(max = 255,message = "La descripción del producto no puede tener más de 45 caracteres")
     private String descripcion;
 }

@@ -29,7 +29,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .invalidateHttpSession(true);
 
         http.authorizeRequests()
-                .antMatchers("/Productos","/Productos/**").hasAuthority("gestor")
+                .antMatchers("/Usuario/nuevoProducto").hasAuthority("gestor")
                 .anyRequest().permitAll();
     }
 
