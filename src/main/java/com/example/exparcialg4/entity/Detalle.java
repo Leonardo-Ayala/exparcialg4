@@ -2,12 +2,12 @@ package com.example.exparcialg4.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "detalle")
-public class Detalle {
+public class Detalle implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "iddetalle")
@@ -16,17 +16,13 @@ public class Detalle {
     @Column(nullable = false)
     private int cantidad;
 
-    @NotNull
-    @Digits(integer = 5, fraction = 3)
+    @Digits(integer = 10, fraction = 2)
     private BigDecimal preciototal;
 
     @ManyToOne
     @JoinColumn(name = "pedidos_idpedidos")
     private Pedidos pedidos;
 
-    @ManyToOne
-    @JoinColumn(name = "carrito_idcarrito")
-    private Carrito carrito;
 
     @ManyToOne
     @JoinColumn(name = "productos_idproductos")
@@ -63,14 +59,6 @@ public class Detalle {
 
     public void setPedidos(Pedidos pedidos) {
         this.pedidos = pedidos;
-    }
-
-    public Carrito getCarrito() {
-        return carrito;
-    }
-
-    public void setCarrito(Carrito carrito) {
-        this.carrito = carrito;
     }
 
     public Productos getProductos() {

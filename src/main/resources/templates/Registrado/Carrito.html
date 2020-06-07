@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <head th:replace="fragments/navbar.html :: header( title = 'Carrito')"></head>
+</head>
+<body>
+<div class="container">
+    <nav th:replace="fragments/navbar.html :: navbar( active = 'Carrito')"></nav>
+    <h2>Lista de Productos en el Carrito</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Codigo Producto</th>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Subtotal</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="detalle: ${session.listadetalle}" >
+            <td th:text="${detalle.productos.codigo}"></td>
+            <td th:text="${detalle.productos.nombre}"></td>
+            <td th:text="${detalle.productos.precio}"></td>
+            <td th:text="${detalle.cantidad}"></td>
+            <td th:text="${detalle.preciototal}"></td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+    <h4 th:text="|Monto Total S/. ${session.precioTotal}|"></h4>
+    <a class="btn btn-primary" th:href="@{'/Pagar'}">Pagar</a>
+</div>
+</body>
+</html>
