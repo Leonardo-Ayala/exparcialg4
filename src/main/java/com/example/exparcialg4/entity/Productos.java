@@ -1,31 +1,18 @@
 package com.example.exparcialg4.entity;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Entity
 @Table(name="productos")
-public class Productos {
+public class Productos implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idproductos;
-
-    @NotBlank(message = "El código del producto no puede estar vacío")
     private String codigo;
-
-    @NotBlank(message = "El texto no puede estar vacio")
-    @Size(max = 40, message = "el nombre NO puede poseer más de 40 caracteres")
-    @Size(min = 2, message = "el nombre debe poseer más de 2 caracteres")
-    @Pattern(regexp = "[a-zA-Z]",message = "solo se debe ingresar letras")
     private String nombre;
-
-    @Digits(integer = 10, fraction = 4)
-    @Positive
     private BigDecimal precio;
-
-    @Digits(integer = 10, fraction = 0)
-    @Positive
     private int stock;
 
     public int getIdproductos() {
@@ -68,6 +55,14 @@ public class Productos {
         this.stock = stock;
     }
 
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
+    }
+
     public String getDescripcion() {
         return descripcion;
     }
@@ -76,18 +71,6 @@ public class Productos {
         this.descripcion = descripcion;
     }
 
-    public byte[] getFoto() {
-        return foto;
-    }
-
-    public void setFoto(byte[] foto) {
-        this.foto = foto;
-    }
-
-    @Lob
-    private byte[] foto;
-
-    @NotBlank(message = "La descripción del producto no puede estar vacio")
-    @Size(max = 45,message = "La descripción del producto no puede tener más de 45 caracteres")
+    private String foto;
     private String descripcion;
 }
