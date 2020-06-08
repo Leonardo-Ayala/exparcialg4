@@ -1,4 +1,4 @@
-package com.example.exparcialg4.service;
+package com.example.exparcialg4.controller;
 
 import com.example.exparcialg4.entity.Usuarios;
 import com.example.exparcialg4.repository.UsuarioRepository;
@@ -14,6 +14,7 @@ import java.util.Random;
 public class SendMailController {
     @Autowired
     UsuarioRepository usuarioRepository;
+
     @Autowired
     SendMailService sendMailService;
 
