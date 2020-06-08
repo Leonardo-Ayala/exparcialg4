@@ -3,6 +3,7 @@
 <head th:replace="fragments/navbar.html :: header( title = 'Productos')"></head>
 <body>
 <div class="container">
+    <div th:replace="fragments/navbarAdmin.html :: barrasuperior"> </div>
     <!--  <nav th:replace="fragments/navbar.html :: navbar( active = 'Productos')"></nav>  -->
     <br>
     <h2>Lista de Gestores</h2>
@@ -11,8 +12,8 @@
         <thead>
         <tr>
             <th>#</th>
-            <th>Nombre</th>
-            <th>Apellido</th>
+            <th>Nombres</th>
+            <th>Apellidos</th>
             <th>Dni</th>
             <th>Correo</th>
             <th></th>

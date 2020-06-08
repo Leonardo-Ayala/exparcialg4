@@ -5,8 +5,11 @@ import com.example.exparcialg4.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.validation.Valid;
 import java.util.Optional;
 
 @Controller
@@ -18,8 +21,8 @@ public class AdminController {
 
     @GetMapping(value = {"/listaGestores", ""})
     public String listaGestores(Model model){
-        model.addAttribute("listaGestores",usuarioRepository.findAll());
-        //model.addAttribute("listaGestores",usuarioRepository.findByRol("gestor"));
+       // model.addAttribute("listaGestores",usuarioRepository.findAll());
+        model.addAttribute("listaGestores",usuarioRepository.findByRol("gestor"));
         return "Administrador/listaGestores";
     }
 
@@ -29,27 +32,32 @@ public class AdminController {
     }
 
     @PostMapping("/guardarGestor")
-    public String guardarGestor(@ModelAttribute("usuarios") Usuarios usuarios, Model model, RedirectAttributes attr){
+    public String guardarGestor(@ModelAttribute("usuarios") @Valid Usuarios usuarios,BindingResult bindingResult,
+                                Model model, RedirectAttributes attr){
 
-        if(usuarios.getIdusuarios() == 0){
-            usuarios.setRol("gestor");
-            usuarios.setPwd("12345678");
-            usuarios.setActivo(1);
-            usuarioRepository.save(usuarios);
-            attr.addFlashAttribute("msg","Gestor creado exitosamente");
-            return "redirect:/admin/listaGestores";
-        } else if (usuarios.getIdusuarios() != 0) {
-           //   usuarios.setRol("gestor");
-           // usuarios.setPwd("12345678");
-          //  usuarios.setActivo(1);
-            usuarioRepository.save(usuarios);
-            attr.addFlashAttribute("msg", "Gestor actualizado exitosamente");
-            return "redirect:/admin/listaGestores";
+        if (bindingResult.hasErrors()) {
+           return "Administrador/nuevoGestor";
         } else {
-            model.addAttribute("errorGestor", "Los datos ingresados ya existen");
-            return "Administrador/nuevoGestor";
-        }
 
+            if (usuarios.getIdusuarios() == 0) {
+                usuarios.setRol("gestor");
+                usuarios.setPwd("344555");
+                usuarios.setActivo(1);
+                usuarioRepository.save(usuarios);
+                attr.addFlashAttribute("msg", "Gestor creado exitosamente");
+                return "redirect:/admin/listaGestores";
+            } else if (usuarios.getIdusuarios() != 0) {
+                //   usuarios.setRol("gestor");
+                // usuarios.setPwd("12345678");
+                //  usuarios.setActivo(1);
+                usuarioRepository.save(usuarios);
+                attr.addFlashAttribute("msg", "Gestor actualizado exitosamente");
+                return "redirect:/admin/listaGestores";
+            } else {
+                model.addAttribute("errorGestor", "Los datos ingresados ya existen");
+                return "Administrador/nuevoGestor";
+            }
+        }
     }
 
     @GetMapping("/editarGestor")
